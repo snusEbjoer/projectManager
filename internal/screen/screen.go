@@ -51,16 +51,20 @@ func (s *Screen) Render() string {
 		if z == s.curr.Value() {
 			v.name = focusedStyle.Render(v.name)
 		}
-		buffer.WriteString(v.name + "\n")
+		buffer.WriteString(fmt.Sprintf("%s \n", v.name))
 	}
 
 	buffer.WriteString("\n" + inputStyle.Render("search: "+s.input.Value()))
-	buffer.WriteString(hintsStyle.Render("\n\nType project name to search"))
-	buffer.WriteString(hintsStyle.Render("\nPress enter to open project"))
-	buffer.WriteString(hintsStyle.Render("\nPress ESC to exit\n"))
+	buffer = addHints(buffer)
 	return buffer.String()
 }
 
+func addHints(buffer bytes.Buffer) bytes.Buffer {
+	buffer.WriteString(hintsStyle.Render("\n\nType project name to search"))
+	buffer.WriteString(hintsStyle.Render("\nPress enter to open project"))
+	buffer.WriteString(hintsStyle.Render("\nPress ESC to exit\n"))
+	return buffer
+}
 func (s *Screen) initInput() {
 	for _, char := range characters {
 		s.controls.AddHandler(RuneKey(string(char)), func(a ...any) {
