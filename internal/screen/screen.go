@@ -123,7 +123,7 @@ func (s *Screen) init() {
 	})
 }
 
-func hasPrefix(s string, prefix string) bool { // fuck case sencetivity
+func hasPrefix(s string, prefix string) bool { // fuck case sensitivity
 	return strings.HasPrefix(strings.ToLower(s), strings.ToLower(prefix))
 }
 
